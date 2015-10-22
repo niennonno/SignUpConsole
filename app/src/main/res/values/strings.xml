@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Sign Up Console</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
+    <string name="title_activity_log_in">Log In</string>
+    <string name="title_activity_thank_you">" "</string>
+    <string name="title_activity_thank_you2">Logged In!</string>
+    <string name="fb_app_id">803937146395623</string>
+</resources>
