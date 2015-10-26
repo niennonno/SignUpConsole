@@ -50,6 +50,9 @@
             android:label="@string/title_activity_thank_you2"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="47821c6721133173a7f67cec765bd20ba3999d61" />
     </application>
 
 </manifest>

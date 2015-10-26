@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.parse.ParseUser;
+import com.twitter.sdk.android.Twitter;
 
 public class ThankYou2Activity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class ThankYou2Activity extends AppCompatActivity {
                 ParseUser.logOutInBackground();
                 ParseUser user = ParseUser.getCurrentUser();
                 LoginManager.getInstance().logOut();
+                Twitter.getInstance().logOut();
                 if(user==null){
                     Toast.makeText(ThankYou2Activity.this, "Logged Out!", Toast.LENGTH_SHORT).show();
                 }else{
