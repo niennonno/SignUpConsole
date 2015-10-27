@@ -11,10 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphRequestAsyncTask;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.parse.Parse;
@@ -26,6 +31,8 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
+import org.json.JSONObject;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "RXN9UP6nIPCT3kXZSU4j8DW6l";
     private static final String TWITTER_SECRET = "Fltuj0pxGRCKCURzBRTXsWoQNl0ssbBTfjMhmPnFuY1U5rOzlp";
-
+    private static final String TAG = "MainActivity";
 
     CallbackManager callbackManager;
     private TwitterLoginButton twitterLoginButton;
@@ -64,6 +71,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d("MainActivity","Success!");
+                final AccessToken accessToken = loginResult.getAccessToken();
+                GraphRequestAsyncTask request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject user, GraphResponse graphResponse) {
+                        Log.d(TAG, user.optString("email"));
+                        Log.d(TAG, user.optString("name"));
+                        Log.d(TAG, user.optString("id"));
+                    }
+                }).executeAsync();
+
+                Profile.getCurrentProfile().getId();                    //Facebook User ID
 
                 if(loginResult!=null){
                     Intent i = new Intent(MainActivity.this,ThankYou2Activity.class);
@@ -96,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 // with your app's user model
                 String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+
+                Log.d(TAG, Long.toString(session.getUserId()));                                        //Twitter User ID
 
                 if(result!=null){
                     Intent i = new Intent(MainActivity.this,ThankYou2Activity.class);
